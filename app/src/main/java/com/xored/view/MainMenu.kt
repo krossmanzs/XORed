@@ -82,7 +82,13 @@ fun MainMenu(
             modifier = Modifier.width(TextFieldDefaults.MinWidth),
             enabled = viewModel.getEncryptStatus() == "Tidak",
             onClick = {
-                if (viewModel.encrypt(inputPesan.value, inputKunci.value)) {
+                if(inputKunci.value.isEmpty() || inputPesan.value.isEmpty()) {
+                    Toast.makeText(
+                        context,
+                        "Pesan atau Kunci tidak boleh kosong!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (viewModel.encrypt(inputPesan.value, inputKunci.value)) {
                     Toast.makeText(
                         context,
                         "Berhasil Enkripsi!",
@@ -104,7 +110,13 @@ fun MainMenu(
             modifier = Modifier.width(TextFieldDefaults.MinWidth),
             enabled = viewModel.getEncryptStatus() == "Ya",
             onClick = {
-                if (viewModel.decrypt(inputKunci.value)) {
+                if(inputKunci.value.isEmpty() || inputPesan.value.isEmpty()) {
+                    Toast.makeText(
+                        context,
+                        "Pesan atau Kunci tidak boleh kosong!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (viewModel.decrypt(inputKunci.value)) {
                     Toast.makeText(
                         context,
                         "Berhasil Dekripsi!",
@@ -149,19 +161,16 @@ fun DescriptionCard(viewModel: MainMenuViewModel) {
             OutlinedTextField(
                 value = viewModel.text,
                 onValueChange = {},
-                textStyle = TextStyle(color = Color.White),
+                textStyle = TextStyle(color = TextStyle.Default.color),
                 label = { Text(
                     text = "Pesan",
                     fontSize = 16.sp,
-                    color = Color.White) },
+                    color = TextStyle.Default.color) },
                 readOnly = true,
                 enabled = false,
                 modifier = Modifier
                     .fillMaxHeight(0.3f)
                     .verticalScroll(state = scrollState),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    disabledBorderColor = Color.White
-                )
             )
             OutlinedTextField(
                 value = viewModel.getEncryptStatus(),
