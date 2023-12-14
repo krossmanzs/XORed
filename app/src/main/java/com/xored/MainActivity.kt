@@ -54,9 +54,7 @@ class MainActivity : ComponentActivity() {
 
                     ModalNavigationDrawer(
                         drawerContent = {
-                            DrawerSheet(viewModel = viewModel) {
-                                scope.launch { drawerState.close() }
-                            }
+                            DrawerSheet()
                         },
                         drawerState = drawerState
                     ) {
@@ -88,9 +86,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
+@Preview
 @Composable
 fun GreetingPreview() {
-    XORedTheme {
-        Greeting("Android")
-    }
+    MainMenu(viewModel = MainMenuViewModel(), context = LocalContext.current)
 }
